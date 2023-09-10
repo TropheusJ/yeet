@@ -2,23 +2,23 @@
 	"schema_version": 1,
 	"quilt_loader": {
 		"group": "io.github.tropheusj",
-		"id": "modid",
+		"id": "yeet",
 		"version": "${version}",
 		"metadata": {
-			"name": "Modid",
+			"name": "Yeet",
 			"description": "A short description of your mod.",
 			"contributors": {
 				"Tropheus Jay": "Owner"
 			},
 			"contact": {
-				"issues": "https://github.com/TropheusJ/quilt-template-mod/issues",
-				"sources": "https://github.com/TropheusJ/quilt-template-mod"
+				"issues": "https://github.com/TropheusJ/yeet/issues",
+				"sources": "https://github.com/TropheusJ/yeet"
 			},
-			"icon": "assets/modid/icon.png"
+			"icon": "assets/yeet/icon.png"
 		},
 		"intermediate_mappings": "net.fabricmc:intermediary",
 		"entrypoints": {
-			"init": "io.github.tropheusj.modid.ExampleMod"
+			"init": "io.github.tropheusj.yeet.Yeet"
 		},
 		"depends": [
 			{
@@ -35,5 +35,5 @@
 			}
 		]
 	},
-	"mixin": "modid.mixins.json"
+	"mixin": "yeet.mixins.json"
 }
