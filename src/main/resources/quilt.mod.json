@@ -18,21 +18,22 @@
 		},
 		"intermediate_mappings": "net.fabricmc:intermediary",
 		"entrypoints": {
-			"init": "io.github.tropheusj.yeet.Yeet"
+			"init": "io.github.tropheusj.yeet.Yeet",
+      "client_init": "io.github.tropheusj.yeet.YeetClient"
 		},
-		"depends": [
-			{
-				"id": "quilt_loader",
-				"versions": ">=${loader_version}"
-			},
-			{
-				"id": "quilted_fabric_api",
-				"versions": ">=${qfapi_version}"
-			},
-			{
-				"id": "minecraft",
-				"versions": ">=${minecraft_version}"
-			}
+    "depends": [
+      {
+        "id": "quilt_loader",
+        "versions": ">=${loader_version}"
+      },
+      {
+        "id": "quilted_fabric_api",
+        "versions": ">=${qfapi_version}"
+      },
+      {
+        "id": "minecraft",
+        "versions": ">=${minecraft_version}"
+      }
 		]
 	},
 	"mixin": "yeet.mixins.json"

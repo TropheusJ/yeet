@@ -4,8 +4,13 @@
   "package": "io.github.tropheusj.yeet.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "ItemEntityMixin",
+    "ServerPlayerMixin"
   ],
   "client": [
+    "ItemInHandRendererMixin",
+    "MinecraftMixin",
+    "PlayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
