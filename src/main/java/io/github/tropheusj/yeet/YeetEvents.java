@@ -15,23 +15,23 @@ import org.quiltmc.qsl.base.api.event.Event;
  * Removing the item entity is a valid operation.
  */
 public class YeetEvents {
-	public static final Event<Yeet> YEET = Event.create(Yeet.class, callbacks -> (player, item, ticks) -> {
-		for (Yeet callback : callbacks) {
-			if (item.isAlive() && !item.getItem().isEmpty()) {
-				callback.onYeet(player, item, ticks);
-			}
+	public static final Event<OnYeet> YEET = Event.create(OnYeet.class, callbacks -> (player, item, ticks) -> {
+		for (OnYeet callback : callbacks) {
+			callback.onYeet(player, item, ticks);
+			if (Yeet.isInvalid(item))
+				break;
 		}
 	});
 
-	public interface Yeet {
+	public interface OnYeet {
 		void onYeet(ServerPlayer player, ItemEntity item, int chargeTicks);
 	}
 
 	public static final Event<Tick> TICK = Event.create(Tick.class, callbacks -> (item, ticks) -> {
 		for (Tick callback : callbacks) {
-			if (item.isAlive() && !item.getItem().isEmpty()) {
-				callback.onTick(item, ticks);
-			}
+			callback.onTick(item, ticks);
+			if (Yeet.isInvalid(item))
+				break;
 		}
 	});
 
@@ -41,9 +41,9 @@ public class YeetEvents {
 
 	public static final Event<BlockHit> HIT_BLOCK = Event.create(BlockHit.class, callbacks -> (item, ticks, hit) -> {
 		for (BlockHit callback : callbacks) {
-			if (item.isAlive() && !item.getItem().isEmpty()) {
-				callback.onHitBlock(item, ticks, hit);
-			}
+			callback.onHitBlock(item, ticks, hit);
+			if (Yeet.isInvalid(item))
+				break;
 		}
 	});
 
@@ -53,9 +53,9 @@ public class YeetEvents {
 
 	public static final Event<EntityHit> HIT_ENTITY = Event.create(EntityHit.class, callbacks -> (item, ticks, hit) -> {
 		for (EntityHit callback : callbacks) {
-			if (item.isAlive() && !item.getItem().isEmpty()) {
-				callback.onHitEntity(item, ticks, hit);
-			}
+			callback.onHitEntity(item, ticks, hit);
+			if (Yeet.isInvalid(item))
+				break;
 		}
 	});
 

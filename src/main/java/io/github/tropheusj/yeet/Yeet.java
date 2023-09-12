@@ -7,6 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.BowItem;
 
 import net.minecraft.world.item.Item;
@@ -85,5 +86,9 @@ public class Yeet implements ModInitializer {
 		} else {
 			return 0;
 		}
+	}
+
+	public static boolean isInvalid(ItemEntity item) {
+		return item.isRemoved() || item.getItem().isEmpty();
 	}
 }

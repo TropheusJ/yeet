@@ -45,6 +45,9 @@ public abstract class ItemEntityMixin extends Entity implements ItemEntityExtens
 	@Unique
 	private int chargeTicks;
 
+	@Unique
+	private int ticksOnGround;
+
 	public ItemEntityMixin(EntityType<?> variant, Level world) {
 		super(variant, world);
 	}
@@ -60,7 +63,7 @@ public abstract class ItemEntityMixin extends Entity implements ItemEntityExtens
 		if (chargeTicks > 0 && level() instanceof ServerLevel level && isAlive()) {
 			YeetEvents.TICK.invoker().onTick((ItemEntity) (Object) this, chargeTicks);
 
-			if (isRemoved())
+			if (Yeet.isInvalid((ItemEntity) (Object) this))
 				return;
 
 			Vec3 pos = position();
@@ -74,7 +77,7 @@ public abstract class ItemEntityMixin extends Entity implements ItemEntityExtens
 				YeetEvents.HIT_BLOCK.invoker().onHitBlock((ItemEntity) (Object) this, chargeTicks, blockHit);
 			}
 
-			if (isRemoved())
+			if (Yeet.isInvalid((ItemEntity) (Object) this))
 				return;
 
 			EntityHitResult entityHit = ProjectileUtil.getEntityHitResult(
@@ -85,6 +88,12 @@ public abstract class ItemEntityMixin extends Entity implements ItemEntityExtens
 			}
 
 			if (onGround()) {
+				ticksOnGround++;
+			} else {
+				ticksOnGround = 0;
+			}
+
+			if (ticksOnGround > 3) {
 				chargeTicks = 0;
 				clearFire();
 			}
