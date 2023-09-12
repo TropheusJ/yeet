@@ -69,4 +69,16 @@ public class Yeet implements ModInitializer {
 			return BowItem.getPowerForTime(chargeTicks);
 		}
 	}
+
+	public static float getDamageAmount(int chargeTicks) {
+		if (chargeTicks >= Yeet.TICKS_FOR_SUPERCHARGE_2) {
+			return 6;
+		} else if (chargeTicks >= Yeet.TICKS_FOR_SUPERCHARGE_1) {
+			return 4;
+		} else if (chargeTicks >= Yeet.TICKS_FOR_MAX_WIND_UP) {
+			return 2;
+		} else {
+			return 0;
+		}
+	}
 }

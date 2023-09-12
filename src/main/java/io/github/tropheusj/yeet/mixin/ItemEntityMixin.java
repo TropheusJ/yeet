@@ -39,6 +39,9 @@ public abstract class ItemEntityMixin extends Entity implements ItemEntityExtens
 	@Shadow
 	public abstract void playerTouch(Player player);
 
+	@Shadow
+	private int age;
+
 	@Unique
 	private int chargeTicks;
 
@@ -95,11 +98,19 @@ public abstract class ItemEntityMixin extends Entity implements ItemEntityExtens
 
 	@Unique
 	private boolean canHitEntity(Entity entity) {
-		return entity.canBeHitByProjectile() && getOwner() != entity;
+		if (entity == getOwner()) {
+			return age > 20; // avoid hitting as soon as it spawns
+		}
+		return entity.canBeHitByProjectile();
 	}
 
 	@Override
 	public void yeet$setChargeTicks(int chargeTicks) {
 		this.chargeTicks = chargeTicks;
+	}
+
+	@Override
+	public int yeet$getChargeTicks() {
+		return chargeTicks;
 	}
 }
