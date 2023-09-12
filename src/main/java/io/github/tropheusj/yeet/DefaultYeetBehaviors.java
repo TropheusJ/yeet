@@ -54,9 +54,8 @@ public class DefaultYeetBehaviors {
 	public static final GenericHit EXPLODE = (item, chargeTicks, hit) -> {
 		if (chargeTicks > Yeet.TICKS_FOR_SUPERCHARGE_1) {
 			ItemStack stack = item.getItem();
-			Yeet.EXPLOSIVENESS.get(stack.getItem()).ifPresent(value -> {
+			Yeet.EXPLOSIVENESS.get(stack.getItem()).ifPresent(strength -> {
 				Vec3 pos = hit.getLocation();
-				float strength = stack.getCount() * value;
 				item.level().explode(item, pos.x, pos.y, pos.z, strength, Level.ExplosionInteraction.TNT);
 				item.discard();
 			});
