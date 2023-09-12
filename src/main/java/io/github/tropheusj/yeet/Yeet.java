@@ -53,11 +53,11 @@ public class Yeet implements ModInitializer {
 		return new ResourceLocation(ID, path);
 	}
 
-	public static float getWindUp(float partialTicks, int chargeTicks) {
+	public static float getWindUp(float partialTicks, int chargeTicks, float min, float max) {
 		// sinusoidal function starting at 0, maxing out at pi/2 after TICKS_FOR_MAX_WIND_UP
 		float progress = Math.min(TICKS_FOR_MAX_WIND_UP, chargeTicks + partialTicks);
 		float mult = Mth.TWO_PI / (2 * TICKS_FOR_MAX_WIND_UP);
-		return (Mth.PI / 4) * (-Mth.cos(progress * mult) + 1);
+		return (max / 2) * (-Mth.cos(progress * mult) + 1) + min;
 	}
 
 	public static float getPower(int chargeTicks) {

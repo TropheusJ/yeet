@@ -10,7 +10,8 @@
   "client": [
     "ItemInHandRendererMixin",
     "MinecraftMixin",
-    "PlayerMixin"
+    "PlayerMixin",
+    "PlayerRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
