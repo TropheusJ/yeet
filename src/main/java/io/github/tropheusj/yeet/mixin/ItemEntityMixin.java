@@ -84,8 +84,10 @@ public abstract class ItemEntityMixin extends Entity implements ItemEntityExtens
 				YeetEvents.HIT_ENTITY.invoker().onHitEntity((ItemEntity) (Object) this, chargeTicks, entityHit);
 			}
 
-			if (onGround())
+			if (onGround()) {
 				chargeTicks = 0;
+				clearFire();
+			}
 		}
 	}
 

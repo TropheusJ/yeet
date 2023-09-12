@@ -53,11 +53,16 @@ public class Yeet implements ModInitializer {
 		return new ResourceLocation(ID, path);
 	}
 
-	public static float getWindUp(float partialTicks, int chargeTicks, float min, float max) {
-		// sinusoidal function starting at 0, maxing out at pi/2 after TICKS_FOR_MAX_WIND_UP
-		float progress = Math.min(TICKS_FOR_MAX_WIND_UP, chargeTicks + partialTicks);
-		float mult = Mth.TWO_PI / (2 * TICKS_FOR_MAX_WIND_UP);
-		return (max / 2) * (-Mth.cos(progress * mult) + 1) + min;
+	public static float getWindUp(int chargeTicks, float partialTicks, float min, float max) {
+		float ticks = Math.min(TICKS_FOR_MAX_WIND_UP, chargeTicks + partialTicks); // max out at max ticks
+		float progress = ticks / TICKS_FOR_MAX_WIND_UP;
+		return smoothLerp(progress, min, max);
+	}
+
+	public static float smoothLerp(float progress, float a, float b) {
+		float inSineDomain = Mth.map(progress, 0, 1, -Mth.HALF_PI, Mth.HALF_PI);
+		float smoothProgress = (Mth.sin(inSineDomain) + 1) / 2;
+		return Mth.lerp(smoothProgress, a, b);
 	}
 
 	public static float getPower(int chargeTicks) {

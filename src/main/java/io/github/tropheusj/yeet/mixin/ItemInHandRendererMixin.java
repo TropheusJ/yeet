@@ -24,6 +24,7 @@ import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.ItemStack;
 
 @Mixin(ItemInHandRenderer.class)
@@ -47,12 +48,15 @@ public class ItemInHandRendererMixin {
 						   ItemStack item, float equipProgress, PoseStack matrices, MultiBufferSource vertexConsumers, int light, CallbackInfo ci) {
 		if (hand == InteractionHand.MAIN_HAND) {
 			int chargeTicks = ((PlayerExtensions) player).yeet$getChargeTicks();
-			float windUp = Yeet.getWindUp(tickDelta, chargeTicks, 0, Mth.HALF_PI);
-			matrices.translate(0, 0, 0.3);
-			matrices.mulPose(Axis.XP.rotation(windUp));
-			matrices.translate(0, 0, -0.3);
+			if (chargeTicks > 0) {
+				float windUp = Yeet.getWindUp(chargeTicks, tickDelta, 0, Mth.HALF_PI);
+				matrices.translate(0, 0, 0.3);
+				matrices.mulPose(Axis.XP.rotation(windUp));
+				matrices.translate(0, 0, -0.3);
 
-			SuperchargeEffectHandler.renderSupercharge(chargeTicks, minecraft, itemRenderer, player, hand, item, matrices, vertexConsumers, light);
+				HumanoidArm arm = player.getMainArm();
+				SuperchargeEffectHandler.renderSupercharge(chargeTicks, minecraft, itemRenderer, player, arm, item, matrices, vertexConsumers, light);
+			}
 		}
 	}
 }

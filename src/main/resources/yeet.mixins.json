@@ -9,9 +9,10 @@
   ],
   "client": [
     "ItemInHandRendererMixin",
+    "LivingEntityRendererMixin",
     "MinecraftMixin",
-    "PlayerMixin",
-    "PlayerRendererMixin"
+    "ItemInHandLayerMixin",
+    "PlayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

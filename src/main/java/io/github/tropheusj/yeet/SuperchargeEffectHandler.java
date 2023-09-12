@@ -49,7 +49,7 @@ public class SuperchargeEffectHandler implements ClientTickEvents.End {
 	}
 
 	public static void renderSupercharge(int chargeTicks, Minecraft mc, ItemRenderer itemRenderer,
-										 AbstractClientPlayer player, InteractionHand hand, ItemStack held,
+										 AbstractClientPlayer player, HumanoidArm arm, ItemStack held,
 										 PoseStack matrices, MultiBufferSource vertexConsumers, int light) {
 		BlockState fire = SuperchargeEffectHandler.getFireState(chargeTicks);
 		if (fire != null) {
@@ -58,7 +58,6 @@ public class SuperchargeEffectHandler implements ClientTickEvents.End {
 			// align fire with held item
 			int seed = player.getId() + ItemDisplayContext.FIRST_PERSON_RIGHT_HAND.ordinal();
 			BakedModel model = itemRenderer.getModel(held, player.level(), player, seed);
-			HumanoidArm arm = hand == InteractionHand.MAIN_HAND ? player.getMainArm() : player.getMainArm().getOpposite();
 			boolean leftHanded = arm == HumanoidArm.LEFT;
 			model.getTransforms().getTransform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).apply(leftHanded, matrices);
 
