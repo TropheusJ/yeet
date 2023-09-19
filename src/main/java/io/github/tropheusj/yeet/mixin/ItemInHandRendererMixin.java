@@ -2,11 +2,12 @@ package io.github.tropheusj.yeet.mixin;
 
 import com.mojang.math.Axis;
 
-import io.github.tropheusj.yeet.SuperchargeEffectHandler;
 import io.github.tropheusj.yeet.Yeet;
 
 import io.github.tropheusj.yeet.extensions.PlayerExtensions;
 
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.util.Mth;
 
 import org.spongepowered.asm.mixin.Final;
@@ -25,7 +26,9 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
 
 @Mixin(ItemInHandRenderer.class)
 public class ItemInHandRendererMixin {
@@ -55,7 +58,25 @@ public class ItemInHandRendererMixin {
 				matrices.translate(0, 0, -0.3);
 
 				HumanoidArm arm = player.getMainArm();
-				SuperchargeEffectHandler.renderSuperchargeFirstPerson(chargeTicks, minecraft, itemRenderer, player, arm, item, matrices, vertexConsumers, light);
+
+				BlockState fire = Yeet.getSuperchargeFireState(chargeTicks);
+				if (fire != null) {
+					matrices.pushPose();
+
+					// align fire with held item
+					int seed = player.getId() + ItemDisplayContext.FIRST_PERSON_RIGHT_HAND.ordinal();
+					BakedModel model = itemRenderer.getModel(item, player.level(), player, seed);
+					boolean leftHanded = arm == HumanoidArm.LEFT;
+					model.getTransforms().getTransform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).apply(leftHanded, matrices);
+
+					// render the fire on the item
+					matrices.scale(1.1f, 1.1f, 1.1f);
+					matrices.translate(-0.5, -0.5, -0.5);
+
+					minecraft.getBlockRenderer().renderSingleBlock(fire, matrices, vertexConsumers, light, OverlayTexture.NO_OVERLAY);
+
+					matrices.popPose();
+				}
 			}
 		}
 	}

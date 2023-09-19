@@ -10,7 +10,6 @@ public class YeetClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient(ModContainer mod) {
 		ClientTickEvents.END.register(LocalChargeTracker.INSTANCE);
-		ClientTickEvents.END.register(SuperchargeEffectHandler.INSTANCE);
 		YeetNetworking.initClient();
 	}
 }

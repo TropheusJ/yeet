@@ -11,9 +11,13 @@ import io.github.tropheusj.yeet.networking.YeetNetworking;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -60,5 +64,17 @@ public abstract class ServerPlayerMixin extends Player {
 		}
 
 		return true;
+	}
+
+	@Inject(method = "tick", at = @At("TAIL"))
+	private void playSuperchargeSounds(CallbackInfo ci) {
+		if (this instanceof PlayerExtensions ex) {
+			int chargeTicks = ex.yeet$getChargeTicks();
+			if (chargeTicks == Yeet.TICKS_FOR_SUPERCHARGE_1) {
+				level().playSound(null, getX(), getY(), getZ(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1, 0.75f);
+			} else if (chargeTicks == Yeet.TICKS_FOR_SUPERCHARGE_2) {
+				level().playSound(null, getX(), getY(), getZ(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1, 1.25f);
+			}
+		}
 	}
 }

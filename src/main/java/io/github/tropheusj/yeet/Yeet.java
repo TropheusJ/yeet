@@ -2,12 +2,15 @@ package io.github.tropheusj.yeet;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 
 import io.github.tropheusj.yeet.networking.YeetNetworking;
 
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,6 +56,17 @@ public class Yeet implements ModInitializer {
 			return SUPERCHARGE_1_POWER;
 		} else {
 			return getWindUp(chargeTicks, 0, 0, MAX_WIND_UP_POWER);
+		}
+	}
+
+	@Nullable
+	public static BlockState getSuperchargeFireState(int chargeTicks) {
+		if (chargeTicks >= TICKS_FOR_SUPERCHARGE_2) {
+			return Blocks.SOUL_FIRE.defaultBlockState();
+		} else if (chargeTicks >= TICKS_FOR_SUPERCHARGE_1) {
+			return Blocks.FIRE.defaultBlockState();
+		} else {
+			return null;
 		}
 	}
 }
