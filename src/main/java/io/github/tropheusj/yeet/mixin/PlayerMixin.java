@@ -28,22 +28,6 @@ public class PlayerMixin implements PlayerExtensions {
 		}
 	}
 
-	@WrapWithCondition(
-			method = "aiStep",
-			at = @At(
-					value = "INVOKE",
-					target = "Lnet/minecraft/world/entity/player/Player;touch(Lnet/minecraft/world/entity/Entity;)V",
-					ordinal = 0 // non-exp
-			)
-	)
-	private boolean allowHitEventToFire(Player self, Entity entity) {
-		if (entity instanceof ItemEntityExtensions ex && ex.yeet$getChargeTicks() > 0) {
-			return false; // skip touching here, let the item handle events
-		} else {
-			return true;
-		}
-	}
-
 	@Override
 	public int yeet$getChargeTicks() {
 		return chargeTicks;

@@ -1,7 +1,6 @@
 package io.github.tropheusj.yeet.mixin;
 
 import io.github.tropheusj.yeet.Yeet;
-import io.github.tropheusj.yeet.YeetEvents;
 import io.github.tropheusj.yeet.extensions.ItemEntityExtensions;
 
 import net.minecraft.world.level.ClipContext;
@@ -61,39 +60,13 @@ public abstract class ItemEntityMixin extends Entity implements ItemEntityExtens
 	)
 	private void yeetHandling(CallbackInfo ci) {
 		if (chargeTicks > 0 && level() instanceof ServerLevel level && isAlive()) {
-			YeetEvents.TICK.invoker().onTick((ItemEntity) (Object) this, chargeTicks);
-
-			if (Yeet.isInvalid((ItemEntity) (Object) this))
-				return;
-
-			Vec3 pos = position();
-			Vec3 vel = getDeltaMovement();
-			Vec3 next = pos.add(vel);
-
-			BlockHitResult blockHit = level.clip(
-					new ClipContext(pos, next, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this)
-			);
-			if (blockHit.getType() != HitResult.Type.MISS) {
-				YeetEvents.HIT_BLOCK.invoker().onHitBlock((ItemEntity) (Object) this, chargeTicks, blockHit);
-			}
-
-			if (Yeet.isInvalid((ItemEntity) (Object) this))
-				return;
-
-			EntityHitResult entityHit = ProjectileUtil.getEntityHitResult(
-					level, this, pos, next, this.getBoundingBox().expandTowards(vel).inflate(1.0), this::canHitEntity
-			);
-			if (entityHit != null) {
-				YeetEvents.HIT_ENTITY.invoker().onHitEntity((ItemEntity) (Object) this, chargeTicks, entityHit);
-			}
-
-			if (onGround()) {
+			if (onGround() || isInFluid()) {
 				ticksOnGround++;
 			} else {
 				ticksOnGround = 0;
 			}
 
-			if (ticksOnGround > 3) {
+			if (ticksOnGround > 5) {
 				chargeTicks = 0;
 				clearFire();
 			}
@@ -108,11 +81,8 @@ public abstract class ItemEntityMixin extends Entity implements ItemEntityExtens
 	}
 
 	@Unique
-	private boolean canHitEntity(Entity entity) {
-		if (entity == getOwner()) {
-			return age > 20; // avoid hitting as soon as it spawns
-		}
-		return entity.canBeHitByProjectile();
+	private boolean isInFluid() {
+		return !level().getFluidState(blockPosition()).isEmpty();
 	}
 
 	@Override

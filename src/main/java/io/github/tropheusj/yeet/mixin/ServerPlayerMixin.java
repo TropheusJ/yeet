@@ -4,13 +4,10 @@ import com.llamalad7.mixinextras.injector.WrapWithCondition;
 import com.mojang.authlib.GameProfile;
 
 import io.github.tropheusj.yeet.Yeet;
-import io.github.tropheusj.yeet.YeetEvents;
 import io.github.tropheusj.yeet.extensions.ItemEntityExtensions;
 import io.github.tropheusj.yeet.extensions.PlayerExtensions;
 
 import io.github.tropheusj.yeet.networking.YeetNetworking;
-
-import net.minecraft.world.entity.item.ItemEntity;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -45,10 +42,6 @@ public abstract class ServerPlayerMixin extends Player {
 				YeetNetworking.sendStopCharging((ServerPlayer) (Object) this);
 			}
 			if (chargeTicks > 10) { // only actually a yeet if sufficiently charged
-				YeetEvents.YEET.invoker().onYeet((ServerPlayer) (Object) this, (ItemEntity) entity, chargeTicks);
-				if (entity.isRemoved())
-					return false;
-
 				item.yeet$setChargeTicks(chargeTicks);
 				if (chargeTicks >= Yeet.TICKS_FOR_SUPERCHARGE_1) {
 					entity.setSecondsOnFire(60 * 5);

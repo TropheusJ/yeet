@@ -47,7 +47,6 @@ public class Yeet implements ModInitializer {
 	@Override
 	public void onInitialize(ModContainer mod) {
 		YeetNetworking.init();
-		DefaultYeetBehaviors.init();
 	}
 
 	public static ResourceLocation id(String path) {
