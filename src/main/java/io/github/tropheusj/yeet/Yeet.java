@@ -16,7 +16,7 @@ public class Yeet implements ModInitializer {
 	public static final String ID = "yeet";
 	public static final Logger LOGGER = LoggerFactory.getLogger(ID);
 
-	public static final int TICKS_FOR_MAX_WIND_UP = 2 * 20;
+	public static final int TICKS_FOR_MAX_WIND_UP = (int) (1.5 * 20);
 	public static final int TICKS_FOR_SUPERCHARGE_1 = 4 * 20;
 	public static final int TICKS_FOR_SUPERCHARGE_2 = 6 * 20;
 

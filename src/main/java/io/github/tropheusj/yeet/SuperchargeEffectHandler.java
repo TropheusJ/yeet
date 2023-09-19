@@ -1,5 +1,7 @@
 package io.github.tropheusj.yeet;
 
+import com.mojang.math.Axis;
+
 import io.github.tropheusj.yeet.extensions.PlayerExtensions;
 
 import org.jetbrains.annotations.Nullable;
@@ -48,7 +50,7 @@ public class SuperchargeEffectHandler implements ClientTickEvents.End {
 		}
 	}
 
-	public static void renderSupercharge(int chargeTicks, Minecraft mc, ItemRenderer itemRenderer,
+	public static void renderSuperchargeFirstPerson(int chargeTicks, Minecraft mc, ItemRenderer itemRenderer,
 										 AbstractClientPlayer player, HumanoidArm arm, ItemStack held,
 										 PoseStack matrices, MultiBufferSource vertexConsumers, int light) {
 		BlockState fire = SuperchargeEffectHandler.getFireState(chargeTicks);
@@ -61,10 +63,28 @@ public class SuperchargeEffectHandler implements ClientTickEvents.End {
 			boolean leftHanded = arm == HumanoidArm.LEFT;
 			model.getTransforms().getTransform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).apply(leftHanded, matrices);
 
-			// render the fire
+			// render the fire on the item
 			matrices.scale(1.1f, 1.1f, 1.1f);
 			matrices.translate(-0.5, -0.5, -0.5);
+
 			mc.getBlockRenderer().renderSingleBlock(fire, matrices, vertexConsumers, light, OverlayTexture.NO_OVERLAY);
+
+			matrices.popPose();
+		}
+	}
+
+	public static void renderSuperchargeThirdPerson(int chargeTicks, PoseStack matrices, MultiBufferSource vertexConsumers, int light) {
+		BlockState fire = SuperchargeEffectHandler.getFireState(chargeTicks);
+		if (fire != null) {
+			// render the fire on the arm
+			matrices.pushPose();
+
+			matrices.mulPose(Axis.XN.rotationDegrees(90));
+			matrices.scale(0.3f, 0.3f, 0.3f);
+			matrices.translate(-0.5, -1, -0.9);
+
+			Minecraft.getInstance().getBlockRenderer().renderSingleBlock(fire, matrices, vertexConsumers, light, OverlayTexture.NO_OVERLAY);
+
 			matrices.popPose();
 		}
 	}

@@ -55,7 +55,7 @@ public class ItemInHandRendererMixin {
 				matrices.translate(0, 0, -0.3);
 
 				HumanoidArm arm = player.getMainArm();
-				SuperchargeEffectHandler.renderSupercharge(chargeTicks, minecraft, itemRenderer, player, arm, item, matrices, vertexConsumers, light);
+				SuperchargeEffectHandler.renderSuperchargeFirstPerson(chargeTicks, minecraft, itemRenderer, player, arm, item, matrices, vertexConsumers, light);
 			}
 		}
 	}

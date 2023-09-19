@@ -35,11 +35,7 @@ public class ItemInHandLayerMixin {
 		if (entity instanceof AbstractClientPlayer player && entity instanceof PlayerExtensions ex && arm == entity.getMainArm()) {
 			int chargeTicks = ex.yeet$getChargeTicks();
 			if (chargeTicks >= Yeet.TICKS_FOR_SUPERCHARGE_1) {
-				Minecraft mc = Minecraft.getInstance();
-				ItemRenderer itemRenderer = mc.getItemRenderer();
-				SuperchargeEffectHandler.renderSupercharge(
-						chargeTicks, mc, itemRenderer, player, arm, stack, matrices, vertexConsumers, light
-				);
+				SuperchargeEffectHandler.renderSuperchargeThirdPerson(chargeTicks, matrices, vertexConsumers, light);
 			}
 		}
 	}
