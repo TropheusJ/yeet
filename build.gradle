@@ -34,6 +34,15 @@ dependencies {
 	modLocalRuntime("com.terraformersmc:modmenu:$mod_menu_version")
 }
 
+loom {
+	runs {
+		client2 {
+			client()
+			runDir("run/client_2")
+		}
+	}
+}
+
 tasks.register("buildOrPublish") {
 	group = "build"
 	String mavenUser = System.getenv("MAVEN_USER")
