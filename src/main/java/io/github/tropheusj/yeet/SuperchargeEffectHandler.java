@@ -53,7 +53,7 @@ public class SuperchargeEffectHandler implements ClientTickEvents.End {
 	public static void renderSuperchargeFirstPerson(int chargeTicks, Minecraft mc, ItemRenderer itemRenderer,
 										 AbstractClientPlayer player, HumanoidArm arm, ItemStack held,
 										 PoseStack matrices, MultiBufferSource vertexConsumers, int light) {
-		BlockState fire = SuperchargeEffectHandler.getFireState(chargeTicks);
+		BlockState fire = getFireState(chargeTicks);
 		if (fire != null) {
 			matrices.pushPose();
 
@@ -74,7 +74,7 @@ public class SuperchargeEffectHandler implements ClientTickEvents.End {
 	}
 
 	public static void renderSuperchargeThirdPerson(int chargeTicks, PoseStack matrices, MultiBufferSource vertexConsumers, int light) {
-		BlockState fire = SuperchargeEffectHandler.getFireState(chargeTicks);
+		BlockState fire = getFireState(chargeTicks);
 		if (fire != null) {
 			// render the fire on the arm
 			matrices.pushPose();

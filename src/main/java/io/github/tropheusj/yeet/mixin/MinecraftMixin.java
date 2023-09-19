@@ -1,18 +1,18 @@
 package io.github.tropheusj.yeet.mixin;
 
-import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-
 import io.github.tropheusj.yeet.LocalChargeTracker;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.Slice;
 
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 
 @Mixin(Minecraft.class)
 public class MinecraftMixin {
-	@ModifyExpressionValue(
+	@Redirect(
 			method = "handleKeybinds",
 			slice = @Slice(
 					from = @At(
@@ -26,7 +26,7 @@ public class MinecraftMixin {
 					ordinal = 0
 			)
 	)
-	private static boolean yeet(boolean pressed) {
+	private boolean yeet(KeyMapping keyDrop) {
 		return LocalChargeTracker.INSTANCE.consumeYeet();
 	}
 }
