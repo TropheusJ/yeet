@@ -1,8 +1,0 @@
-{
-  "replace": false,
-  "values": {
-    "minecraft:tnt": 4,
-    "minecraft:tnt_minecart": 4,
-    "minecraft:gunpowder": 0.5
-  }
-}
