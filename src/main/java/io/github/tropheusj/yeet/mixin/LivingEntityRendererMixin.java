@@ -3,6 +3,8 @@ package io.github.tropheusj.yeet.mixin;
 import io.github.tropheusj.yeet.Yeet;
 import io.github.tropheusj.yeet.extensions.PlayerExtensions;
 
+import net.minecraft.world.entity.Pose;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -40,7 +42,7 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
 			)
 	)
 	private void windUpArm(T entity, float f, float partialTicks, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, CallbackInfo ci) {
-		if (entity instanceof PlayerExtensions ex && model instanceof PlayerModel<?> playerModel) {
+		if (entity instanceof PlayerExtensions ex && model instanceof PlayerModel<?> playerModel && entity.getPose() == Pose.STANDING) {
 			int chargeTicks = ex.yeet$getChargeTicks();
 			if (chargeTicks > 0) {
 				boolean rightArmMain = entity.getMainArm() == HumanoidArm.RIGHT;
