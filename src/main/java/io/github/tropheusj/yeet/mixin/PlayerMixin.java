@@ -1,8 +1,5 @@
 package io.github.tropheusj.yeet.mixin;
 
-import com.llamalad7.mixinextras.injector.WrapWithCondition;
-
-import io.github.tropheusj.yeet.extensions.ItemEntityExtensions;
 import io.github.tropheusj.yeet.extensions.PlayerExtensions;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -11,7 +8,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
 @Mixin(Player.class)
