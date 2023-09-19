@@ -40,6 +40,10 @@ loom {
 			client()
 			runDir("run/client_2")
 		}
+		client3 {
+			client()
+			runDir("run/client_3")
+		}
 	}
 }
 
