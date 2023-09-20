@@ -1,7 +1,10 @@
 package io.github.tropheusj.yeet;
 
+import java.util.Set;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -27,6 +30,9 @@ public class Yeet implements ModInitializer {
 	public static final float MAX_WIND_UP_POWER = 1;
 	public static final float SUPERCHARGE_1_POWER = MAX_WIND_UP_POWER * 1.5f;
 	public static final float SUPERCHARGE_2_POWER = MAX_WIND_UP_POWER * 2;
+
+	// poses where it makes sense to angle the arm for winding up
+	public static final Set<Pose> GOOD_POSES = Set.of(Pose.STANDING, Pose.CROUCHING, Pose.SITTING);
 
 	@Override
 	public void onInitialize(ModContainer mod) {

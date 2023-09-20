@@ -42,7 +42,7 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
 			)
 	)
 	private void windUpArm(T entity, float f, float partialTicks, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, CallbackInfo ci) {
-		if (entity instanceof PlayerExtensions ex && model instanceof PlayerModel<?> playerModel && entity.getPose() == Pose.STANDING) {
+		if (entity instanceof PlayerExtensions ex && model instanceof PlayerModel<?> playerModel && Yeet.GOOD_POSES.contains(entity.getPose())) {
 			int chargeTicks = ex.yeet$getChargeTicks();
 			if (chargeTicks > 0) {
 				boolean rightArmMain = entity.getMainArm() == HumanoidArm.RIGHT;
