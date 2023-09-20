@@ -10,6 +10,7 @@ import io.github.tropheusj.yeet.extensions.PlayerExtensions;
 import io.github.tropheusj.yeet.networking.YeetNetworking;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -19,6 +20,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -41,11 +43,10 @@ public abstract class ServerPlayerMixin extends Player {
 		if (entity instanceof ItemEntityExtensions item && this instanceof PlayerExtensions self) {
 			int chargeTicks = self.yeet$getChargeTicks();
 
-			if (chargeTicks != 0) { // release any charge
-				self.yeet$stopCharging();
-				YeetNetworking.sendStopCharging((ServerPlayer) (Object) this);
+			if (chargeTicks != 0) { // release any charge...
+				releaseCharge();
 			}
-			if (chargeTicks > 10) { // only actually a yeet if sufficiently charged
+			if (chargeTicks > 10) { // ...but only actually a yeet if sufficiently charged
 				item.yeet$setChargeTicks(chargeTicks);
 				if (chargeTicks >= Yeet.TICKS_FOR_SUPERCHARGE_1) {
 					entity.setSecondsOnFire(60 * 5);
@@ -70,11 +71,22 @@ public abstract class ServerPlayerMixin extends Player {
 	private void playSuperchargeSounds(CallbackInfo ci) {
 		if (this instanceof PlayerExtensions ex) {
 			int chargeTicks = ex.yeet$getChargeTicks();
-			if (chargeTicks == Yeet.TICKS_FOR_SUPERCHARGE_1) {
-				level().playSound(null, getX(), getY(), getZ(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1, 0.75f);
-			} else if (chargeTicks == Yeet.TICKS_FOR_SUPERCHARGE_2) {
-				level().playSound(null, getX(), getY(), getZ(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1, 1.25f);
+			if (chargeTicks > 0) {
+				if (getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
+					// client handles this in LocalChargeTracker
+					releaseCharge();
+				} else if (chargeTicks == Yeet.TICKS_FOR_SUPERCHARGE_1) {
+					level().playSound(null, getX(), getY(), getZ(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1, 0.75f);
+				} else if (chargeTicks == Yeet.TICKS_FOR_SUPERCHARGE_2) {
+					level().playSound(null, getX(), getY(), getZ(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1, 1.25f);
+				}
 			}
 		}
+	}
+
+	@Unique
+	private void releaseCharge() {
+		((PlayerExtensions) this).yeet$stopCharging();
+		YeetNetworking.sendStopCharging((ServerPlayer) (Object) this);
 	}
 }
