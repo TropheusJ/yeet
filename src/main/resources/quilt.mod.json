@@ -6,7 +6,7 @@
 		"version": "${version}",
 		"metadata": {
 			"name": "Yeet",
-			"description": "A short description of your mod.",
+			"description": "A mod about throwing things.",
 			"contributors": {
 				"Tropheus Jay": "Owner"
 			},
