@@ -18,7 +18,7 @@ public class LocalChargeTracker implements ClientTickEvents.End {
 	public void endClientTick(Minecraft client) {
 		// implicit null check
 		if (client.player instanceof PlayerExtensions player) {
-			if (canYeet(client.options, client.player)) {
+			if (canYeet(client.player)) {
 				if (player.yeet$getChargeTicks() == 0) {
 					onFirstPress(player);
 				}
@@ -28,7 +28,7 @@ public class LocalChargeTracker implements ClientTickEvents.End {
 		}
 	}
 
-	private boolean canYeet(Options options, LocalPlayer player) {
+	private boolean canYeet(LocalPlayer player) {
 		return YeetClient.YEET_KEY.isDown() && !player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty();
 	}
 
