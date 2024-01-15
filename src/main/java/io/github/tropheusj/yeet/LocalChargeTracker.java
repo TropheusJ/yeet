@@ -29,7 +29,7 @@ public class LocalChargeTracker implements ClientTickEvents.End {
 	}
 
 	private boolean canYeet(Options options, LocalPlayer player) {
-		return options.keyDrop.isDown() && !player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty();
+		return YeetClient.YEET_KEY.isDown() && !player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty();
 	}
 
 	public boolean consumeYeet() {
