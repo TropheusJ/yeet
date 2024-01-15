@@ -1,6 +1,7 @@
 package io.github.tropheusj.yeet.mixin;
 
 import io.github.tropheusj.yeet.LocalChargeTracker;
+import io.github.tropheusj.yeet.YeetClient;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -27,6 +28,8 @@ public class MinecraftMixin {
 			)
 	)
 	private boolean yeet(KeyMapping keyDrop) {
-		return LocalChargeTracker.INSTANCE.consumeYeet();
+		if (YeetClient.YEET_KEY.same(keyDrop))
+			return LocalChargeTracker.INSTANCE.consumeYeet();
+		return LocalChargeTracker.INSTANCE.consumeYeet() || ((Minecraft) (Object) this).options.keyDrop.consumeClick();
 	}
 }

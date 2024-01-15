@@ -10,6 +10,8 @@
   ],
   "client": [
     "ItemInHandRendererMixin",
+    "KeyMappingAccessor",
+    "KeyMappingMixin",
     "LivingEntityRendererMixin",
     "MinecraftMixin",
     "ItemInHandLayerMixin"
