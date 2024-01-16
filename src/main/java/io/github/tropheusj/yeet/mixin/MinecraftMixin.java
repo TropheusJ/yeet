@@ -1,11 +1,13 @@
 package io.github.tropheusj.yeet.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+
 import io.github.tropheusj.yeet.LocalChargeTracker;
 import io.github.tropheusj.yeet.YeetClient;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.Slice;
 
 import net.minecraft.client.KeyMapping;
@@ -13,7 +15,7 @@ import net.minecraft.client.Minecraft;
 
 @Mixin(Minecraft.class)
 public class MinecraftMixin {
-	@Redirect(
+	@WrapOperation(
 			method = "handleKeybinds",
 			slice = @Slice(
 					from = @At(
@@ -27,9 +29,9 @@ public class MinecraftMixin {
 					ordinal = 0
 			)
 	)
-	private boolean yeet(KeyMapping keyDrop) {
+	private boolean yeet(KeyMapping keyDrop, Operation<Boolean> original) {
 		if (YeetClient.YEET_KEY.same(keyDrop))
 			return LocalChargeTracker.INSTANCE.consumeYeet();
-		return LocalChargeTracker.INSTANCE.consumeYeet() || ((Minecraft) (Object) this).options.keyDrop.consumeClick();
+		return LocalChargeTracker.INSTANCE.consumeYeet() || original.call(keyDrop);
 	}
 }
