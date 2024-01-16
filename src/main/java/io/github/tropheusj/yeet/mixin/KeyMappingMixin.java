@@ -13,7 +13,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import io.github.tropheusj.yeet.YeetClient;
 import net.minecraft.client.KeyMapping;
 
-@Mixin(KeyMapping.class)
+@Mixin(value = KeyMapping.class, priority = 1001)
 public class KeyMappingMixin {
 	@Inject(method = "set", at = @At("HEAD"))
 	private static void updateYeetKey(InputConstants.Key key, boolean pressed, CallbackInfo ci) {
