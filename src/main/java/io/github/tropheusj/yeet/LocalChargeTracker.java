@@ -3,7 +3,6 @@ package io.github.tropheusj.yeet;
 import io.github.tropheusj.yeet.extensions.PlayerExtensions;
 import io.github.tropheusj.yeet.networking.YeetNetworking;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.Options;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.InteractionHand;
 
