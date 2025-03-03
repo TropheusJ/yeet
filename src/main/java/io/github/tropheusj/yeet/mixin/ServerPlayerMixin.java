@@ -1,6 +1,6 @@
 package io.github.tropheusj.yeet.mixin;
 
-import com.llamalad7.mixinextras.injector.WrapWithCondition;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.mojang.authlib.GameProfile;
 
 import io.github.tropheusj.yeet.Yeet;
@@ -28,7 +28,7 @@ import net.minecraft.world.phys.Vec3;
 
 @Mixin(ServerPlayer.class)
 public abstract class ServerPlayerMixin extends Player {
-	public ServerPlayerMixin(Level world, BlockPos pos, float yaw, GameProfile gameProfile) {
+	protected ServerPlayerMixin(Level world, BlockPos pos, float yaw, GameProfile gameProfile) {
 		super(world, pos, yaw, gameProfile);
 	}
 
@@ -44,12 +44,12 @@ public abstract class ServerPlayerMixin extends Player {
 			int chargeTicks = self.yeet$getChargeTicks();
 
 			if (chargeTicks != 0) { // release any charge...
-				releaseCharge();
+				this.releaseCharge();
 			}
 			if (chargeTicks > 10) { // ...but only actually a yeet if sufficiently charged
 				item.yeet$setChargeTicks(chargeTicks);
 				if (chargeTicks >= Yeet.TICKS_FOR_SUPERCHARGE_1) {
-					entity.setSecondsOnFire(60 * 5);
+					entity.setRemainingFireTicks(60 * 5 * 20);
 				}
 				// based on BowItem and arrows
 				float power = Yeet.getPower(chargeTicks);
@@ -72,13 +72,13 @@ public abstract class ServerPlayerMixin extends Player {
 		if (this instanceof PlayerExtensions ex) {
 			int chargeTicks = ex.yeet$getChargeTicks();
 			if (chargeTicks > 0) {
-				if (getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
+				if (this.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
 					// client handles this in LocalChargeTracker
-					releaseCharge();
+					this.releaseCharge();
 				} else if (chargeTicks == Yeet.TICKS_FOR_SUPERCHARGE_1) {
-					level().playSound(null, getX(), getY(), getZ(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1, 0.75f);
+					this.level().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1, 0.75f);
 				} else if (chargeTicks == Yeet.TICKS_FOR_SUPERCHARGE_2) {
-					level().playSound(null, getX(), getY(), getZ(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1, 1.25f);
+					this.level().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1, 1.25f);
 				}
 			}
 		}

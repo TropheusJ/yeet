@@ -2,27 +2,26 @@ package io.github.tropheusj.yeet;
 
 import io.github.tropheusj.yeet.extensions.PlayerExtensions;
 import io.github.tropheusj.yeet.networking.YeetNetworking;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.InteractionHand;
 
-import org.quiltmc.qsl.lifecycle.api.client.event.ClientTickEvents;
-
-public class LocalChargeTracker implements ClientTickEvents.End {
+public class LocalChargeTracker implements ClientTickEvents.EndTick {
 	public static final LocalChargeTracker INSTANCE = new LocalChargeTracker();
 
 	private boolean yeetReady = false;
 
 	@Override
-	public void endClientTick(Minecraft client) {
+	public void onEndTick(Minecraft client) {
 		// implicit null check
 		if (client.player instanceof PlayerExtensions player) {
-			if (canYeet(client.player)) {
+			if (this.canYeet(client.player)) {
 				if (player.yeet$getChargeTicks() == 0) {
-					onFirstPress(player);
+					this.onFirstPress(player);
 				}
 			} else if (player.yeet$getChargeTicks() != 0) {
-				onRelease(player);
+				this.onRelease(player);
 			}
 		}
 	}
@@ -32,8 +31,8 @@ public class LocalChargeTracker implements ClientTickEvents.End {
 	}
 
 	public boolean consumeYeet() {
-		boolean ready = yeetReady;
-		yeetReady = false;
+		boolean ready = this.yeetReady;
+		this.yeetReady = false;
 		return ready;
 	}
 
@@ -45,7 +44,7 @@ public class LocalChargeTracker implements ClientTickEvents.End {
 
 	private void onRelease(PlayerExtensions player) {
 		player.yeet$stopCharging();
-		yeetReady = true;
+		this.yeetReady = true;
 		// no need to update server
 	}
 }

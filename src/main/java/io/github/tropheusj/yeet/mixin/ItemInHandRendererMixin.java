@@ -65,7 +65,7 @@ public class ItemInHandRendererMixin {
 
 					// align fire with held item
 					int seed = player.getId() + ItemDisplayContext.FIRST_PERSON_RIGHT_HAND.ordinal();
-					BakedModel model = itemRenderer.getModel(item, player.level(), player, seed);
+					BakedModel model = this.itemRenderer.getModel(item, player.level(), player, seed);
 					boolean leftHanded = arm == HumanoidArm.LEFT;
 					model.getTransforms().getTransform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).apply(leftHanded, matrices);
 
@@ -73,7 +73,7 @@ public class ItemInHandRendererMixin {
 					matrices.scale(1.1f, 1.1f, 1.1f);
 					matrices.translate(-0.5, -0.5, -0.5);
 
-					minecraft.getBlockRenderer().renderSingleBlock(fire, matrices, vertexConsumers, light, OverlayTexture.NO_OVERLAY);
+					this.minecraft.getBlockRenderer().renderSingleBlock(fire, matrices, vertexConsumers, light, OverlayTexture.NO_OVERLAY);
 
 					matrices.popPose();
 				}

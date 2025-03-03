@@ -6,10 +6,10 @@ public interface PlayerExtensions {
 	void yeet$setCharging(boolean charging);
 
 	default void yeet$startCharging() {
-		yeet$setCharging(true);
+		this.yeet$setCharging(true);
 	}
 
 	default void yeet$stopCharging() {
-		yeet$setCharging(false);
+		this.yeet$setCharging(false);
 	}
 }

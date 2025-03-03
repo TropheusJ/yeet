@@ -2,24 +2,19 @@ package io.github.tropheusj.yeet;
 
 import java.util.Set;
 
+import net.fabricmc.api.ModInitializer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
-import org.quiltmc.loader.api.ModContainer;
-import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
-
 import io.github.tropheusj.yeet.networking.YeetNetworking;
 
 import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class Yeet implements ModInitializer {
 	public static final String ID = "yeet";
-	public static final Logger LOGGER = LoggerFactory.getLogger(ID);
 
 	public static final int TICKS_FOR_MAX_WIND_UP = (int) (1.5 * 20);
 	public static final int TICKS_FOR_SUPERCHARGE_1 = 4 * 20;
@@ -35,12 +30,12 @@ public class Yeet implements ModInitializer {
 	public static final Set<Pose> GOOD_POSES = Set.of(Pose.STANDING, Pose.CROUCHING, Pose.SITTING);
 
 	@Override
-	public void onInitialize(ModContainer mod) {
+	public void onInitialize() {
 		YeetNetworking.init();
 	}
 
 	public static ResourceLocation id(String path) {
-		return new ResourceLocation(ID, path);
+		return ResourceLocation.fromNamespaceAndPath(ID, path);
 	}
 
 	public static float getWindUp(int chargeTicks, float partialTicks, float min, float max) {

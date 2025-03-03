@@ -1,13 +1,15 @@
 package io.github.tropheusj.yeet.mixin;
 
 import java.util.Map;
+import java.util.Objects;
+
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.llamalad7.mixinextras.injector.WrapWithCondition;
 import com.mojang.blaze3d.platform.InputConstants;
 
 import io.github.tropheusj.yeet.YeetClient;
@@ -30,6 +32,6 @@ public class KeyMappingMixin {
 		)
 	)
 	private boolean dontYeetMap(Map<?, ?> instance, Object key, Object value) {
-		return ((String) key) != YeetClient.YEET_KEY_ID;
+		return !Objects.equals(key, YeetClient.YEET_KEY_ID);
 	}
 }

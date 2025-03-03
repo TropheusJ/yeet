@@ -19,14 +19,14 @@ public class PlayerMixin implements PlayerExtensions {
 
 	@Inject(method = "tick", at = @At("HEAD"))
 	private void tickYeetCharge(CallbackInfo ci) {
-		if (charging) {
+		if (this.charging) {
 			this.chargeTicks++;
 		}
 	}
 
 	@Override
 	public int yeet$getChargeTicks() {
-		return chargeTicks;
+		return this.chargeTicks;
 	}
 
 	@Override

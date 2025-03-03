@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "yeet",
+  "version": "${version}",
+  "name": "Yeet",
+  "description": "A mod about throwing things.",
+  "authors": [
+    "Tropheus Jay"
+  ],
+  "contact": {
+    "issues": "https://github.com/TropheusJ/yeet/issues",
+    "sources": "https://github.com/TropheusJ/yeet"
+  },
+  "license": "MIT",
+  "icon": "assets/yeet/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "io.github.tropheusj.yeet.Yeet"
+    ],
+    "client": [
+      "io.github.tropheusj.yeet.YeetClient"
+    ]
+  },
+  "mixins": [
+    "yeet.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": ">=${fapi_version}",
+    "minecraft": "${minecraft_dependency}"
+  }
+}
