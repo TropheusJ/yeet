@@ -22,7 +22,7 @@ val buildNum = providers.environmentVariable("GITHUB_RUN_NUMBER")
     .orElse("local")
     .get()
 
-version = "1.1.0+$buildNum-mc$minecraftVersion"
+version = "1.1.1+$buildNum-mc$minecraftVersion"
 
 repositories {
     maven("https://maven.parchmentmc.org")

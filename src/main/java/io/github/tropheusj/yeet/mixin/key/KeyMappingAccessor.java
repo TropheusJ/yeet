@@ -1,4 +1,4 @@
-package io.github.tropheusj.yeet.mixin;
+package io.github.tropheusj.yeet.mixin.key;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;

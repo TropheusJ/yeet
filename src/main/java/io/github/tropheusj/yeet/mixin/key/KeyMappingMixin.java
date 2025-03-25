@@ -1,4 +1,4 @@
-package io.github.tropheusj.yeet.mixin;
+package io.github.tropheusj.yeet.mixin.key;
 
 import java.util.Map;
 import java.util.Objects;
